@@ -16,7 +16,7 @@ import java.util.Scanner;
  *
  * @author austinletson
  */
-public class StandardTextInputSystem{
+public class StandardTextInputSystem {
 
 
     Scanner stdInput;
@@ -25,29 +25,30 @@ public class StandardTextInputSystem{
     List<Command> commands = new ArrayList();
 
 
-
-
     //Use this annotation to create Standard Text Input System Commands
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
     @Inherited
     @Documented
-    protected @interface IsCommand{};
+    protected @interface IsCommand {
+    }
+
+    ;
 
     /**
      * Constructor for using a simple Scanner for input
      *
-     * @param stdIn InputStream
+     * @param stdIn  InputStream
      * @param stdOut PrintStream
      */
-    public StandardTextInputSystem(InputStream stdIn, PrintStream stdOut){
+    public StandardTextInputSystem(InputStream stdIn, PrintStream stdOut) {
         stdInput = new Scanner(stdIn);
         stdOutput = stdOut;
         Method[] allMethods = this.getClass().getMethods();
-        for(Method method: allMethods){
+        for (Method method : allMethods) {
             Annotation[] methodDeclaredAnnotations = method.getDeclaredAnnotations();
-            for(Annotation annotation: methodDeclaredAnnotations){
-                if (annotation instanceof IsCommand){
+            for (Annotation annotation : methodDeclaredAnnotations) {
+                if (annotation instanceof IsCommand) {
                     commands.add(new Command(method.getName(), method));
                 }
             }
@@ -56,10 +57,10 @@ public class StandardTextInputSystem{
 
     }
 
-    /**Calls upon the InputSystem to prompt the user. (Will not return until user has entered a valid command)
-     *
+    /**
+     * Calls upon the InputSystem to prompt the user. (Will not return until user has entered a valid command)
      */
-    public void prompt(){
+    public void prompt() {
         stdOutput.print(defaultPrompt);
         searchForCommand();
     }
@@ -69,19 +70,18 @@ public class StandardTextInputSystem{
      *
      * @param promptText String
      */
-    public void prompt(String promptText){
+    public void prompt(String promptText) {
         stdOutput.print(promptText);
         searchForCommand();
     }
 
     /**
      * Searches the Standard Input for a valid command and then executes that command method
-     *
      */
-    protected void searchForCommand(){
+    protected void searchForCommand() {
 
         List<String> words = new ArrayList(Arrays.asList(stdInput.nextLine().split(" ")));
-        for(Command cmd : commands) {
+        for (Command cmd : commands) {
             if (cmd.commandText.equals(words.get(0))) {
                 words.remove(0);
                 try {
@@ -98,7 +98,7 @@ public class StandardTextInputSystem{
      *
      * @param output String
      */
-    public void println(String output){
+    public void println(String output) {
         stdOutput.println(output);
     }
 
@@ -107,10 +107,9 @@ public class StandardTextInputSystem{
      *
      * @param defaultPromptTxt String
      */
-    public void setDefaultPromptText(String defaultPromptTxt){
+    public void setDefaultPromptText(String defaultPromptTxt) {
         defaultPrompt = defaultPromptTxt;
     }
-
 
 
 }
