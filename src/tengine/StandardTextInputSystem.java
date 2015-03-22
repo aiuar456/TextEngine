@@ -26,6 +26,7 @@ public class StandardTextInputSystem{
 
 
 
+
     //Use this annotation to create Standard Text Input System Commands
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
